@@ -18,37 +18,32 @@ type
     btnCancel: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSelectPathClick(Sender: TObject);
+    procedure cbbServerChange(Sender: TObject);
   private
     function GetFolder: string;
   public
     { Public declarations }
   end;
 
-var
-  frmPref: TfrmPref;
 
 procedure DoPreferences;
 
 implementation
 
-uses
-  uMain;
-
 {$R *.DFM}
 
 procedure DoPreferences;
 begin
-  frmPref := TfrmPref.Create(Application);
-  with frmPref do
+  with TfrmPref.Create(Application) do
   begin
     if ShowModal = mrOK then
     begin
-      IDE_SetPrefAsString(PlugInID, '', PChar(cbbServer.Text),
-        PChar(edPath.Text));
+      IDE_SetPrefAsString(PlugInID, '', PAnsiChar(AnsiString(cbbServer.Text)),
+        PAnsiChar(AnsiString(edPath.Text)));
     end;
     Free;
   end;
-  frmPref := nil;
+//frmPref := nil;
 end;
 
 procedure TfrmPref.btnSelectPathClick(Sender: TObject);
@@ -56,23 +51,31 @@ begin
   edPath.Text := GetFolder;
 end;
 
+procedure TfrmPref.cbbServerChange(Sender: TObject);
+var
+  APath: AnsiString;
+begin
+  APath := AnsiString(cbbServer.Text);
+  edPath.Text := string(IDE_GetPrefAsString(PlugInID, '',
+    PAnsiChar(APath), ''));
+end;
+
 procedure TfrmPref.FormCreate(Sender: TObject);
 var
   I: Integer;
-  Description, Username, Password, Database,
-    ConnectAs: PChar;
+  Description, Username, Password, Database, ConnectAs: PAnsiChar;
   ID, ParentID: Integer;
   res: Boolean;
 begin
-  i := 0;
+  I := 0;
   repeat
-    res := PlugInIntf.IDE_GetConnectionTree(i, Description, Username, Password, Database,
-      ConnectAs, id, ParentID);
+    res := PlugInIntf.IDE_GetConnectionTree(I, Description, Username, Password,
+      Database, ConnectAs, ID, ParentID);
 
-    if not ((Username = '') or (Database = '') or (ParentID = 0)) then
-      cbbServer.Items.Add(UpperCase(Username + '@' + database));
+    if not((Username = '') or (Database = '') or (ParentID = 0)) then
+      cbbServer.Items.Add(UpperCase(string(Username) + '@' + string(Database)));
 
-    Inc(i);
+    Inc(I);
   until not res;
 end;
 
@@ -80,8 +83,8 @@ function TfrmPref.GetFolder: string;
 var
   lpItemID: PItemIDList;
   BrowseInfo: TBrowseInfo;
-  DisplayName: array[0..MAX_PATH] of char;
-  TempPath: array[0..MAX_PATH] of char;
+  DisplayName: array [0 .. MAX_PATH] of char;
+  TempPath: array [0 .. MAX_PATH] of char;
 begin
   FillChar(BrowseInfo, sizeof(TBrowseInfo), #0);
   BrowseInfo.hwndOwner := Self.Handle;
@@ -89,13 +92,13 @@ begin
   BrowseInfo.lpszTitle := PChar('Choose folder');
   BrowseInfo.ulFlags := BIF_RETURNONLYFSDIRS;
   lpItemID := SHBrowseForFolder(BrowseInfo);
-  if lpItemId <> nil then
+  if lpItemID <> nil then
   begin
     SHGetPathFromIDList(lpItemID, TempPath);
     result := TempPath;
     GlobalFreePtr(lpItemID);
   end;
+
 end;
 
 end.
-

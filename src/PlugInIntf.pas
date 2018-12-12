@@ -1,5 +1,5 @@
 // PL/SQL Developer Plug-In Interface functions
-// Copyright 2006 Allround Automations
+// Copyright 2015 Allround Automations
 // support@allroundautomations.com
 // http://www.allroundautomations.com
 
@@ -34,19 +34,19 @@ var
 
 var // Declaration of all PL/SQL Developer callback functions
   SYS_Version: function: Integer; cdecl;
-  SYS_Registry: function: PChar; cdecl;
-  SYS_RootDir: function: PChar; cdecl;
-  SYS_OracleHome: function: PChar; cdecl;
-  SYS_OCIDLL: function: PChar; cdecl;
+  SYS_Registry: function: PANSIChar; cdecl;
+  SYS_RootDir: function: PANSIChar; cdecl;
+  SYS_OracleHome: function: PANSIChar; cdecl;
+  SYS_OCIDLL: function: PANSIChar; cdecl;
   SYS_OCI8Mode:function : Bool; cdecl;
   SYS_XPStyle:function : Bool; cdecl;
-  SYS_TNSNAMES: function(Param: PChar): PChar; cdecl;
+  SYS_TNSNAMES: function(Param: PANSIChar): PANSIChar; cdecl;
   SYS_DelphiVersion: function: Integer; cdecl;
   // 10
   IDE_MenuState: procedure(ID, Index: Integer; Enabled: Bool); cdecl;
   IDE_Connected: function: Bool; cdecl;
-  IDE_GetConnectionInfo: procedure(var Username, Password, Database: PChar); cdecl;
-  IDE_GetBrowserInfo: procedure(var ObjectType, ObjectOwner, ObjectName: PChar); cdecl;
+  IDE_GetConnectionInfo: procedure(var Username, Password, Database: PANSIChar); cdecl;
+  IDE_GetBrowserInfo: procedure(var ObjectType, ObjectOwner, ObjectName: PANSIChar); cdecl;
   IDE_GetWindowType: function: Integer; cdecl;
   IDE_GetAppHandle: function: Integer; cdecl;
   IDE_GetWindowHandle: function: Integer; cdecl;
@@ -54,107 +54,112 @@ var // Declaration of all PL/SQL Developer callback functions
   IDE_GetChildHandle: function: Integer; cdecl;
   IDE_Refresh: procedure; cdecl;
   // 20
-  IDE_CreateWindow: procedure(WindowType: Integer; Text: PChar; Execute: Bool); cdecl;
-  IDE_OpenFile: function(WindowType: Integer; Filename: PChar): Bool; cdecl;
+  IDE_CreateWindow: procedure(WindowType: Integer; Text: PANSIChar; Execute: Bool); cdecl;
+  IDE_OpenFile: function(WindowType: Integer; Filename: PANSIChar): Bool; cdecl;
   IDE_SaveFile: function: Bool; cdecl;
-  IDE_Filename: function: PChar; cdecl;
+  IDE_Filename: function: PANSIChar; cdecl;
   IDE_CloseFile: procedure; cdecl;
   IDE_SetReadOnly: procedure(ReadOnly: Bool); cdecl;
   IDE_GetReadOnly: function: Bool; cdecl;
-  IDE_ExecuteSQLReport: function(SQL: PChar; Title: PChar; Updateable: Bool): Bool; cdecl;
+  IDE_ExecuteSQLReport: function(SQL: PANSIChar; Title: PANSIChar; Updateable: Bool): Bool; cdecl;
   IDE_ReloadFile: function: Bool; cdecl;
-  IDE_SetFilename: procedure(Filename: PChar); cdecl;
+  IDE_SetFilename: procedure(Filename: PANSIChar); cdecl;
   // 30
-  IDE_GetText: function: PChar; cdecl;
-  IDE_GetSelectedText: function: PChar; cdecl;
-  IDE_GetCursorWord: function: PChar; cdecl;
+  IDE_GetText: function: PANSIChar; cdecl;
+  IDE_GetSelectedText: function: PANSIChar; cdecl;
+  IDE_GetCursorWord: function: PANSIChar; cdecl;
   IDE_GetEditorHandle: function: Integer; cdecl;
-  IDE_SetText: function(T: PChar): Bool; cdecl;
-  IDE_SetStatusMessage: function(T: PChar): Bool; cdecl;
+  IDE_SetText: function(T: PANSIChar): Bool; cdecl;
+  IDE_SetStatusMessage: function(T: PANSIChar): Bool; cdecl;
   IDE_SetErrorPosition: function(Line, Col: Integer): Bool; cdecl;
   IDE_ClearErrorPositions: procedure; cdecl;
   IDE_GetCursorWordPosition: function: Integer; cdecl;
   IDE_Perform: function(Param: Integer): Bool; cdecl;
   // 40
-  SQL_Execute: function(SQL: PChar): Integer; cdecl;
+  SQL_Execute: function(SQL: PANSIChar): Integer; cdecl;
   SQL_FieldCount: function: Integer; cdecl;
   SQL_Eof: function: Bool; cdecl;
   SQL_Next: function: Integer; cdecl;
-  SQL_Field: function(Field: Integer): PChar; cdecl;
-  SQL_FieldName: function(Field: Integer): PChar; cdecl;
-  SQL_FieldIndex: function(Name: PChar): Integer; cdecl;
+  SQL_Field: function(Field: Integer): PANSIChar; cdecl;
+  SQL_FieldName: function(Field: Integer): PANSIChar; cdecl;
+  SQL_FieldIndex: function(Name: PANSIChar): Integer; cdecl;
   SQL_FieldType: function(Field: Integer): Integer; cdecl;
-  SQL_ErrorMessage: function: PChar; cdecl;
+  SQL_ErrorMessage: function: PANSIChar; cdecl;
   // 50
   SQL_UsePlugInSession: function(PlugInID: Integer): Bool; cdecl;
   SQL_UseDefaultSession: procedure(PlugInID: Integer); cdecl;
   SQL_CheckConnection: function: Bool; cdecl;
-  SQL_GetDBMSGetOutput: function: PChar; cdecl;
-  SQL_SetVariable: procedure(Name, Value: PChar); cdecl;
-  SQL_GetVariable: function(Name: PChar): PChar; cdecl;
+  SQL_GetDBMSGetOutput: function: PANSIChar; cdecl;
+  SQL_SetVariable: procedure(Name, Value: PANSIChar); cdecl;
+  SQL_GetVariable: function(Name: PANSIChar): PANSIChar; cdecl;
   SQL_ClearVariables: procedure; cdecl;
+  SQL_SetPlugInSession: function(PlugInID: Integer; Username, Password, Database, ConnectAs: PANSIChar): Bool; cdecl;
   // 60
-  IDE_GetCustomKeywords: function: PChar; cdecl;
-  IDE_SetCustomKeywords: procedure(Keywords: PChar); cdecl;
-  IDE_SetKeywords: procedure(ID, Style: Integer; Keywords: PChar); cdecl;
+  IDE_GetCustomKeywords: function: PANSIChar; cdecl;
+  IDE_SetCustomKeywords: procedure(Keywords: PANSIChar); cdecl;
+  IDE_SetKeywords: procedure(ID, Style: Integer; Keywords: PANSIChar); cdecl;
   IDE_ActivateKeywords: procedure; cdecl;
   IDE_RefreshMenus: procedure(ID: Integer); cdecl;
-  IDE_SetMenuName: procedure(ID, Index: Integer; Name: PChar); cdecl;
+  IDE_SetMenuName: procedure(ID, Index: Integer; Name: PANSIChar); cdecl;
   IDE_SetMenuCheck: procedure(ID, Index: Integer; Enabled: Bool); cdecl;
   IDE_SetMenuVisible: procedure(ID, Index: Integer; Enabled: Bool); cdecl;
-  IDE_GetMenuLayout: function: PChar; cdecl;
-  IDE_CreatePopupItem: procedure(ID, Index: Integer; Name, ObjectType: PChar); cdecl;
+  IDE_GetMenuLayout: function: PANSIChar; cdecl;
+  IDE_CreatePopupItem: procedure(ID, Index: Integer; Name, ObjectType: PANSIChar); cdecl;
   // 70
-  IDE_SetConnection: function(Username, Password, Database: PChar): Bool; cdecl;
-  IDE_GetObjectInfo: procedure(AnObject: PChar; var ObjectType, ObjectOwner, ObjectName, SubObject: PChar); cdecl;
-  IDE_GetBrowserItems: function(Node: PChar; GetItems: Bool): PChar; cdecl;
-  IDE_RefreshBrowser: procedure(Node: PChar); cdecl;
-  IDE_GetPopupObject: procedure(var ObjectType, ObjectOwner, ObjectName, SubObject: PChar); cdecl;
-  IDE_GetPopupBrowserRoot: function: PChar; cdecl;
-  IDE_RefreshObject: procedure(ObjectType, ObjectOwner, ObjectName: PChar; Action: Integer) cdecl;
-  IDE_FirstSelectedObject: function(var ObjectType, ObjectOwner, ObjectName, SubObject: PChar): Bool; cdecl;
-  IDE_NextSelectedObject: function(var ObjectType, ObjectOwner, ObjectName, SubObject: PChar): Bool; cdecl;
-  IDE_GetObjectSource: function(ObjectType, ObjectOwner, ObjectName: PChar): PChar; cdecl;
+  IDE_SetConnection: function(Username, Password, Database: PANSIChar): Bool; cdecl;
+  IDE_GetObjectInfo: procedure(AnObject: PANSIChar; var ObjectType, ObjectOwner, ObjectName, SubObject: PANSIChar); cdecl;
+  IDE_GetBrowserItems: function(Node: PANSIChar; GetItems: Bool): PANSIChar; cdecl;
+  IDE_RefreshBrowser: procedure(Node: PANSIChar); cdecl;
+  IDE_GetPopupObject: procedure(var ObjectType, ObjectOwner, ObjectName, SubObject: PANSIChar); cdecl;
+  IDE_GetPopupBrowserRoot: function: PANSIChar; cdecl;
+  IDE_RefreshObject: procedure(ObjectType, ObjectOwner, ObjectName: PANSIChar; Action: Integer) cdecl;
+  IDE_FirstSelectedObject: function(var ObjectType, ObjectOwner, ObjectName, SubObject: PANSIChar): Bool; cdecl;
+  IDE_NextSelectedObject: function(var ObjectType, ObjectOwner, ObjectName, SubObject: PANSIChar): Bool; cdecl;
+  IDE_GetObjectSource: function(ObjectType, ObjectOwner, ObjectName: PANSIChar): PANSIChar; cdecl;
   // 80
   IDE_GetWindowCount: function: Integer; cdecl;
   IDE_SelectWindow: function(Index: Integer): Bool; cdecl;
   IDE_ActivateWindow: function(Index: Integer): Bool; cdecl;
   IDE_WindowIsModified: function: Bool; cdecl;
   IDE_WindowIsRunning: function: Bool; cdecl;
+  IDE_WindowPin: function(Pin: Integer): Integer; cdecl;
   // 90
   IDE_SplashCreate: procedure(ProgressMax: Integer); cdecl;
   IDE_SplashHide: procedure; cdecl;
-  IDE_SplashWrite: procedure(S: PChar); cdecl;
-  IDE_SplashWriteLn: procedure(S: PChar); cdecl;
+  IDE_SplashWrite: procedure(S: PANSIChar); cdecl;
+  IDE_SplashWriteLn: procedure(S: PANSIChar); cdecl;
   IDE_SplashProgress: procedure(Progress: Integer); cdecl;
-  IDE_TemplatePath: function: PChar; cdecl;
-  IDE_ExecuteTemplate: function(Template: PChar; NewWindow: Bool): Bool; cdecl;
-  IDE_GetConnectAs: function: PChar; cdecl;
-  IDE_SetConnectionAs: function(Username, Password, Database, ConnectAs: PChar): Bool; cdecl;
+  IDE_TemplatePath: function: PANSIChar; cdecl;
+  IDE_ExecuteTemplate: function(Template: PANSIChar; NewWindow: Bool): Bool; cdecl;
+  IDE_GetConnectAs: function: PANSIChar; cdecl;
+  IDE_SetConnectionAs: function(Username, Password, Database, ConnectAs: PANSIChar): Bool; cdecl;
   // 100
-  IDE_GetFileOpenMenu: function(MenuIndex: Integer; var WindowType: Integer): PChar; cdecl;
+  IDE_GetFileOpenMenu: function(MenuIndex: Integer; var WindowType: Integer): PANSIChar; cdecl;
   IDE_CanSaveWindow: function: Bool; cdecl;
-  IDE_OpenFileExternal: procedure(WindowType: Integer; Data, FileSystem, Tag, Filename: PChar); cdecl;
-  IDE_GetFileTypes: function(WindowType: Integer): PChar; cdecl;
-  IDE_GetDefaultExtension: function(WindowType: Integer): PChar; cdecl;
-  IDE_GetFileData: function: PChar; cdecl;
-  IDE_FileSaved: procedure(FileSystem, FileTag, Filename: PChar); cdecl;
-  IDE_ShowHTML: function(Url, Hash, Title, ID: PChar): Bool; cdecl;
-  IDE_RefreshHTML: function(Url, ID: PChar; BringToFront: Bool): Bool; cdecl;
-  IDE_GetProcEditExtension: function(oType: PChar): PChar; cdecl;
+  IDE_OpenFileExternal: procedure(WindowType: Integer; Data, FileSystem, Tag, Filename: PANSIChar); cdecl;
+  IDE_GetFileTypes: function(WindowType: Integer): PANSIChar; cdecl;
+  IDE_GetDefaultExtension: function(WindowType: Integer): PANSIChar; cdecl;
+  IDE_GetFileData: function: PANSIChar; cdecl;
+  IDE_FileSaved: procedure(FileSystem, FileTag, Filename: PANSIChar); cdecl;
+  IDE_ShowHTML: function(Url, Hash, Title, ID: PANSIChar): Bool; cdecl;
+  IDE_RefreshHTML: function(Url, ID: PANSIChar; BringToFront: Bool): Bool; cdecl;
+  IDE_GetProcEditExtension: function(oType: PANSIChar): PANSIChar; cdecl;
   // 110
-  IDE_GetWindowObject: function(var ObjectType, ObjectOwner, ObjectName, SubObject: PChar): Bool; cdecl;
+  IDE_GetWindowObject: function(var ObjectType, ObjectOwner, ObjectName, SubObject: PANSIChar): Bool; cdecl;
+  IDE_FirstSelectedFile: function (Files, Directories: Boolean): PANSIChar; cdecl;
+  IDE_NextSelectedFile: function: PANSIChar; cdecl;
+  IDE_RefreshFileBrowser: procedure; cdecl;
   // 120
   IDE_KeyPress: procedure(Key, Shift: Integer); cdecl;
-  IDE_GetMenuItem: function(MenuName: PChar): Integer; cdecl;
+  IDE_GetMenuItem: function(MenuName: PANSIChar): Integer; cdecl;
   IDE_SelectMenu: function(MenuItem: Integer): Bool; cdecl;
   // 130
-  IDE_TranslationFile: function: PChar; cdecl;
-  IDE_TranslationLanguage: function: PChar; cdecl;
-  IDE_GetTranslatedMenuLayout: function: PChar; cdecl;
-  IDE_MainFont: function: PChar; cdecl;
-  IDE_TranslateItems: function(Group: PChar): PChar; cdecl;
-  IDE_TranslateString: function(ID, Default, Param1, Param2: PChar): PChar; cdecl;
+  IDE_TranslationFile: function: PANSIChar; cdecl;
+  IDE_TranslationLanguage: function: PANSIChar; cdecl;
+  IDE_GetTranslatedMenuLayout: function: PANSIChar; cdecl;
+  IDE_MainFont: function: PANSIChar; cdecl;
+  IDE_TranslateItems: function(Group: PANSIChar): PANSIChar; cdecl;
+  IDE_TranslateString: function(ID, Default, Param1, Param2: PANSIChar): PANSIChar; cdecl;
   // 140
   IDE_SaveRecoveryFiles: function: Bool; cdecl;
   IDE_GetCursorX: function: Integer; cdecl;
@@ -164,55 +169,66 @@ var // Declaration of all PL/SQL Developer callback functions
   IDE_ClearBookmark: procedure(Index: Integer); cdecl;
   IDE_GotoBookmark: procedure(Index: Integer); cdecl;
   IDE_GetBookmark: function(Index: Integer; var X: Integer; var Y: Integer): Bool; cdecl;
-  IDE_TabInfo:function (Index: Integer): PChar; cdecl;
+  IDE_TabInfo:function (Index: Integer): PANSIChar; cdecl;
   IDE_TabIndex: function(Index: Integer): Integer; cdecl;
   // 150
-  IDE_CreateToolButton: procedure(ID, Index: Integer; Name: PChar; BitmapFile: PChar; BitmapHandle: Integer); cdecl;
+  IDE_CreateToolButton: procedure(ID, Index: Integer; Name: PANSIChar; BitmapFile: PANSIChar; BitmapHandle: Integer); cdecl;
   IDE_WindowHasEditor: function(CodeEditor: Bool): Bool; cdecl;
   // 160
   IDE_BeautifierOptions: function: Integer; cdecl;
   IDE_BeautifyWindow: function: Bool; cdecl;
-  IDE_BeautifyText: function(S: PChar): PChar; cdecl;
-  IDE_ObjectAction: function(Action, ObjectType, ObjectOwner, ObjectName: PChar): Bool; cdecl;
-  IDE_ShowDialog: function(Dialog, Param: PChar): Bool; cdecl;
+  IDE_BeautifyText: function(S: PANSIChar): PANSIChar; cdecl;
+  IDE_ObjectAction: function(Action, ObjectType, ObjectOwner, ObjectName: PANSIChar): Bool; cdecl;
+  IDE_ShowDialog: function(Dialog, Param: PANSIChar): Bool; cdecl;
   // 170
-  IDE_DebugLog: procedure(Msg: PChar); cdecl;
-  IDE_GetParamString: function(Name: PChar): PChar; cdecl;
-  IDE_GetParamBool: function(Name: PChar): Bool; cdecl;
-  IDE_GetBrowserFilter: procedure(Index: Integer; var Name, WhereClause, OrderByClause, User: PChar; var Active: Bool); cdecl;
+  IDE_DebugLog: procedure(Msg: PANSIChar); cdecl;
+  IDE_GetParamString: function(Name: PANSIChar): PANSIChar; cdecl;
+  IDE_GetParamBool: function(Name: PANSIChar): Bool; cdecl;
+  IDE_GetBrowserFilter: procedure(Index: Integer; var Name, WhereClause, OrderByClause, User: PANSIChar; var Active: Bool); cdecl;
   // 180
-  IDE_CommandFeedback: procedure(FeedbackHandle: Integer; S: PChar); cdecl;
+  IDE_CommandFeedback: procedure(FeedbackHandle: Integer; S: PANSIChar); cdecl;
   // 190
   IDE_ResultGridRowCount: function: Integer; cdecl;
   IDE_ResultGridColCount: function: Integer; cdecl;
-  IDE_ResultGridCell: function(Col, Row: Integer): PChar; cdecl;
+  IDE_ResultGridCell: function(Col, Row: Integer): PANSIChar; cdecl;
   // 200
-  IDE_Authorized: function(Category, Name, SubName: PChar): Bool; cdecl;
+  IDE_Authorized: function(Category, Name, SubName: PANSIChar): Bool; cdecl;
   IDE_WindowAllowed: function(WindowType: Integer; ShowErrorMessage: Bool): Bool; cdecl;
   IDE_Authorization: function: Bool; cdecl;
-  IDE_AuthorizationItems: function(Category: PChar): PChar; cdecl;
-  IDE_AddAuthorizationItem: procedure(PlugInID: Integer; Name: PChar); cdecl;
+  IDE_AuthorizationItems: function(Category: PANSIChar): PANSIChar; cdecl;
+  IDE_AddAuthorizationItem: procedure(PlugInID: Integer; Name: PANSIChar); cdecl;
   // 210
-  IDE_GetPersonalPrefSets: function: PChar; cdecl;
-  IDE_GetDefaultPrefSets: function: PChar; cdecl;
-  IDE_GetPrefAsString: function(PlugInID: Integer; PrefSet, Name: PChar; Default: PChar): PChar; cdecl;
-  IDE_GetPrefAsInteger: function(PlugInID: Integer; PrefSet, Name: PChar; Default: Integer): Integer; cdecl;
-  IDE_GetPrefAsBool: function(PlugInID: Integer; PrefSet, Name: PChar; Default: Bool): Bool; cdecl;
-  IDE_SetPrefAsString: function(PlugInID: Integer; PrefSet, Name: PChar; Value: PChar): Bool; cdecl;
-  IDE_SetPrefAsInteger: function(PlugInID: Integer; PrefSet, Name: PChar; Value: Integer): Bool; cdecl;
-  IDE_SetPrefAsBool: function(PlugInID: Integer; PrefSet, Name: PChar; Value: Bool): Bool; cdecl;
-  IDE_GetGeneralPref: function(Name: PChar): PChar; cdecl;
-  IDE_PlugInSetting: function(PlugInID: Integer; Setting, Value: PChar): Bool; cdecl;
+  IDE_GetPersonalPrefSets: function: PANSIChar; cdecl;
+  IDE_GetDefaultPrefSets: function: PANSIChar; cdecl;
+  IDE_GetPrefAsString: function(PlugInID: Integer; PrefSet, Name: PANSIChar; Default: PANSIChar): PANSIChar; cdecl;
+  IDE_GetPrefAsInteger: function(PlugInID: Integer; PrefSet, Name: PANSIChar; Default: Integer): Integer; cdecl;
+  IDE_GetPrefAsBool: function(PlugInID: Integer; PrefSet, Name: PANSIChar; Default: Bool): Bool; cdecl;
+  IDE_SetPrefAsString: function(PlugInID: Integer; PrefSet, Name: PANSIChar; Value: PANSIChar): Bool; cdecl;
+  IDE_SetPrefAsInteger: function(PlugInID: Integer; PrefSet, Name: PANSIChar; Value: Integer): Bool; cdecl;
+  IDE_SetPrefAsBool: function(PlugInID: Integer; PrefSet, Name: PANSIChar; Value: Bool): Bool; cdecl;
+  IDE_GetGeneralPref: function(Name: PANSIChar): PANSIChar; cdecl;
+  IDE_PlugInSetting: function(PlugInID: Integer; Setting, Value: PANSIChar): Bool; cdecl;
   // 220
-  IDE_GetProcOverloadCount: function(Owner, PackageName, ProcedureName: PChar): Integer; cdecl;
-  IDE_SelectProcOverloading: function(Owner, PackageName, ProcedureName: PChar): Integer; cdecl;
+  IDE_GetProcOverloadCount: function(Owner, PackageName, ProcedureName: PANSIChar): Integer; cdecl;
+  IDE_SelectProcOverloading: function(Owner, PackageName, ProcedureName: PANSIChar): Integer; cdecl;
   // 230
-  IDE_GetSessionValue: function(AName: PChar): PChar; cdecl;
-  IDE_CheckDBVersion: function(Version: PChar): Boolean; cdecl;
-  //240
-  IDE_GetConnectionTree: function(ix: Integer; var
-  Description, Username, Password, Database,
-  ConnectAs: PChar; var ID, ParentID: integer): Bool; cdecl;
+  IDE_GetSessionValue: function(AName: PANSIChar): PANSIChar; cdecl;
+  IDE_CheckDBVersion: function(Version: PANSIChar): Boolean; cdecl;
+  // 240
+  IDE_GetConnectionInfoEx: function(ix: Integer; var Username, Password, Database, ConnectAs: PANSIChar): Bool; cdecl;
+  IDE_FindConnection: function(Username, Database, ConnectAs: PANSIChar): Integer; cdecl;
+  IDE_AddConnection: function(Username, Password, Database, ConnectAs: PANSIChar): Integer; cdecl;
+  IDE_ConnectConnection: function(ix: Integer): Bool; cdecl;
+  IDE_SetMainConnection: function(ix: Integer): Bool; cdecl;
+  IDE_GetWindowConnection: function: Integer; cdecl;
+  IDE_SetWindowConnection: function(ix: Integer): Bool; cdecl;
+  IDE_GetConnectionTree: function(ix: Integer; var Description, Username, Password, Database, ConnectAs: PANSIChar; var ID, ParentID: integer): Bool; cdecl;
+  // 250
+  IDE_GetConnectionInfoEx10: function(ix: Integer; var Username, Password, Database, ConnectAs, Edition, Workspace: PANSIChar): Bool; cdecl;
+  IDE_FindConnectionEx10: function(Username, Database, ConnectAs, Edition, Workspace: PANSIChar): Integer; cdecl;
+  IDE_AddConnectionEx10: function(Username, Password, Database, ConnectAs, Edition, Workspace: PANSIChar): Integer; cdecl;
+  IDE_GetConnectionTreeEx10: function(ix: Integer; var Description, Username, Password, Database, ConnectAs, Edition, Workspace: PANSIChar; var ID, ParentID: integer): Bool; cdecl;
+
 
 
 procedure RegisterCallback(Index: Integer; Addr: Pointer); cdecl;
@@ -278,6 +294,7 @@ begin
     54 : @SQL_SetVariable := Addr;
     55 : @SQL_GetVariable := Addr;
     56 : @SQL_ClearVariables := Addr;
+    57 : @SQL_SetPlugInSession := Addr; 
     60 : @IDE_GetCustomKeywords := Addr;
     61 : @IDE_SetCustomKeywords := Addr;
     62 : @IDE_SetKeywords := Addr;
@@ -303,6 +320,7 @@ begin
     82 : @IDE_ActivateWindow := Addr;
     83 : @IDE_WindowIsModified := Addr;
     84 : @IDE_WindowIsRunning := Addr;
+    85 : @IDE_WindowPin := Addr;
     90 : @IDE_SplashCreate := Addr;
     91 : @IDE_SplashHide := Addr;
     92 : @IDE_SplashWrite := Addr;
@@ -323,6 +341,9 @@ begin
    108 : @IDE_RefreshHTML := Addr;
    109 : @IDE_GetProcEditExtension := Addr;
    110 : @IDE_GetWindowObject := Addr;
+   111 : @IDE_FirstSelectedFile := Addr; 
+   112 : @IDE_NextSelectedFile := Addr; 
+   113 : @IDE_RefreshFileBrowser := Addr; 
    120 : @IDE_KeyPress := Addr;
    121 : @IDE_GetMenuItem := Addr;
    122 : @IDE_SelectMenu := Addr;
@@ -375,7 +396,18 @@ begin
    221 : @IDE_SelectProcOverloading := Addr;
    230 : @IDE_GetSessionValue := Addr;
    231 : @IDE_CheckDBVersion := Addr;
-   247 : @IDE_GetConnectionTree := Addr;
+   240 : @IDE_GetConnectionInfoEx := Addr;
+   241 : @IDE_FindConnection := Addr;
+   242 : @IDE_AddConnection := Addr;
+   243 : @IDE_ConnectConnection := Addr;
+   244 : @IDE_SetMainConnection := Addr;
+   245 : @IDE_GetWindowConnection := Addr;
+   246 : @IDE_SetWindowConnection := Addr;
+   247 : @IDE_GetConnectionTree := Addr; 
+   250 : @IDE_GetConnectionInfoEx10 := Addr;
+   251 : @IDE_FindConnectionEx10 := Addr;
+   252 : @IDE_AddConnectionEx10 := Addr;
+   253 : @IDE_GetConnectionTreeEx10 := Addr;
   end;
 end;
 
